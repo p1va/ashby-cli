@@ -32,7 +32,7 @@ npx -y @p1va/ashby <board-or-job-url> --json | jq .
 
 The CLI expects either the URL of the hosted Ashby board or just the company slug.
 
-For example Lovable's career page is hosted at `https://jobs.ashbyhq.com/lovable` and their Ashby company name is `lovable`.
+For example Lovable's career page is hosted at `https://jobs.ashbyhq.com/lovable` and their Ashby company slug is `lovable`.
 
 #### List Jobs
 
