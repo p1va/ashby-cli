@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { Command } from "commander";
+import chalk from "chalk";
 import { fetchJobBoard, fetchJobPosting, fetchOrganization } from "./api.js";
 import { formatJobBoard, formatJobDetails } from "./formatter.js";
 
@@ -32,8 +33,19 @@ program
           console.log(formatJobBoard(org, board));
         }
       }
-    } catch (error) {
-      console.error("Error fetching data:", error instanceof Error ? error.message : String(error));
+    } catch (error: any) {
+      if (error?.response?.errors) {
+        // Handle GraphQL errors
+        const messages = error.response.errors.map((e: any) => e.message).join(", ");
+        console.error(chalk.red(`\nError: ${messages}`));
+      } else {
+        // Handle other errors (network, not found, etc)
+        let message = error.message || String(error);
+        if (error.cause && error.cause.message) {
+          message += ` (${error.cause.message})`;
+        }
+        console.error(chalk.red(`\nError: ${message}`));
+      }
       process.exit(1);
     }
   });

@@ -80,10 +80,13 @@ const ORG_QUERY = gql`
 `;
 
 export async function fetchJobBoard(company: string): Promise<JobBoard> {
-  const data = await client.request<{ jobBoard: JobBoard }>(JOB_BOARD_QUERY, {
+  const data = await client.request<{ jobBoard: JobBoard | null }>(JOB_BOARD_QUERY, {
     organizationHostedJobsPageName: company,
   });
   const board = data.jobBoard;
+  if (!board) {
+    throw new Error(`Organization or Job Board not found for: ${company}`);
+  }
   const teamsMap = new Map(board.teams.map((t) => [t.id, t.name]));
 
   board.jobPostings = board.jobPostings.map((job) => ({
@@ -95,19 +98,25 @@ export async function fetchJobBoard(company: string): Promise<JobBoard> {
 }
 
 export async function fetchJobPosting(company: string, id: string): Promise<JobPostingDetails> {
-  const data = await client.request<{ jobPosting: JobPostingDetails }>(JOB_POSTING_QUERY, {
+  const data = await client.request<{ jobPosting: JobPostingDetails | null }>(JOB_POSTING_QUERY, {
     organizationHostedJobsPageName: company,
     jobPostingId: id,
   });
   const job = data.jobPosting;
+  if (!job) {
+    throw new Error(`Job not found with ID: ${id} for company: ${company}`);
+  }
   job.url = `https://jobs.ashbyhq.com/${company}/${job.id}`;
   return job;
 }
 
 export async function fetchOrganization(company: string): Promise<Organization> {
-  const data = await client.request<{ organization: Organization }>(ORG_QUERY, {
+  const data = await client.request<{ organization: Organization | null }>(ORG_QUERY, {
     organizationHostedJobsPageName: company,
     searchContext: "JobBoard",
   });
+  if (!data.organization) {
+    throw new Error(`Organization not found: ${company}`);
+  }
   return data.organization;
 }
