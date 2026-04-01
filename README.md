@@ -2,7 +2,7 @@
 
 # Ashby CLI
 
-A CLI for browsing job openings in [Ashby](https://www.ashbyhq.com/) powered Job Boards.
+A CLI for browsing job openings in Ashby-powered Job Boards.
 
 ![NPM Version](https://img.shields.io/npm/v/%40p1va%2Fashby-cli?style=flat)
 
@@ -67,6 +67,9 @@ ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d --json
 ### Publishing
 
 Released via GitHub Actions when a tag starting with `v*` is pushed.
+
+- `pnpm version patch` to increment the version
+- `git push --follow-tags` to push the new commit and tag
 
 ## License
 
