@@ -19,47 +19,45 @@ or install it globally with `npm install -g @p1va/ashby` and invoke the `ashby` 
 The CLI supports both direct company names and full Ashby URLs.
 
 ```bash
-# Using company name
-ashby lovable
+# Markdown output
+npx -y @p1va/ashby <company-name>
+npx -y @p1va/ashby <company-name> þjob-id>
+npx -y @p1va/ashby <board-or-job-url>
 
-# Using full Ashby job board URL
-ashby https://jobs.ashbyhq.com/lovable
-
-# Using full Ashby job posting URL
-ashby https://jobs.ashbyhq.com/lovable/9f4963e7-be14-4dd9-99ce-05df2f06e22d
-
-# JSON Output
-ashby lovable --json | jq .
+# JSON output
+npx -y @p1va/ashby <company-name> --json | jq .
+npx -y @p1va/ashby <company-name> þjob-id> --json | jq .
+npx -y @p1va/ashby <board-or-job-url> --json | jq .
 ```
 
-To use the CLI first we need to know thecompany name as it appears in their hosted Ashby URL.
+The CLI expects either the URL of the hosted Ashby board or just the company slug.
 
 For example Lovable's career page is hosted at `https://jobs.ashbyhq.com/lovable` and their Ashby company name is `lovable`.
 
 #### List Jobs
 
 ```bash
-# Npx
+# npx, markdown output
 npx -y @p1va/ashby lovable
-npx -y @p1va/ashby lovable --json
+npx -y @p1va/ashby https://jobs.ashbyhq.com/lovable
 
-# Global installation
+# global installation, markdown output
 ashby lovable
-ashby lovable --json
+ashby https://jobs.ashbyhq.com/lovable
 ```
 
 #### Job Details
 
-Pass the job ID after the company name. You can either take the ID from the Job Board list or from the URL `https://jobs.ashbyhq.com/lovable/9f4...22d`.
+To see the details of a job the CLI expects either pass the company slug plus the job id from the previous step or the URL `https://jobs.ashbyhq.com/lovable/9f4...22d` for the job opening directly.
 
 ```bash
-# Npx
-npx -y @p1va/ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d
-npx -y @p1va/ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d --json | jq .
+# npx, markdown output
+npx -y @p1va/ashby lovable 99f4963e7-be14-4dd9-99ce-05df2f06e22d
+npx -y @p1va/ashby https://jobs.ashbyhq.com/lovable/99f4963e7-be14-4dd9-99ce-05df2f06e22d
 
-# Global installation
-ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d
-ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d --json | jq .
+# global installation, markdown output
+ashby lovable 99f4963e7-be14-4dd9-99ce-05df2f06e22d
+ashby https://jobs.ashbyhq.com/lovable/99f4963e7-be14-4dd9-99ce-05df2f06e22d
 ```
 
 ## Development
