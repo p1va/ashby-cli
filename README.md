@@ -16,14 +16,20 @@ or install it globally with `npm install -g @p1va/ashby` and invoke the `ashby` 
 
 ## Usage
 
-```bash
-# Markdown Output
-npx -y @p1va/ashby <company-name>
-npx -y @p1va/ashby <company-name> <job-id>
+The CLI supports both direct company names and full Ashby URLs.
 
-# Json Output
-npx -y @p1va/ashby <company-name> --json | jq .
-npx -y @p1va/ashby <company-name> <job-id> --json | jq .
+```bash
+# Using company name
+ashby lovable
+
+# Using full Ashby job board URL
+ashby https://jobs.ashbyhq.com/lovable
+
+# Using full Ashby job posting URL
+ashby https://jobs.ashbyhq.com/lovable/9f4963e7-be14-4dd9-99ce-05df2f06e22d
+
+# JSON Output
+ashby lovable --json | jq .
 ```
 
 To use the CLI first we need to know thecompany name as it appears in their hosted Ashby URL.

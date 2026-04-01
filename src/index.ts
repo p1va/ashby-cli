@@ -11,17 +11,43 @@ import {
 
 const program = new Command();
 
+function parseAshbyUrl(input: string): { company: string; jobId?: string } | null {
+  try {
+    const url = new URL(input);
+    if (url.hostname !== "jobs.ashbyhq.com") return null;
+
+    const segments = url.pathname.split("/").filter(Boolean);
+    if (segments.length === 0) return null;
+
+    return {
+      company: segments[0],
+      jobId: segments[1],
+    };
+  } catch {
+    return null;
+  }
+}
+
 program
   .name("ashby")
   .description("CLI for browsing open positions hosted via Ashby")
   .version("0.0.1")
-  .argument("<company>", "Company name as seen in the Ashby URL")
+  .argument("<company-or-url>", "Company name or Ashby job board URL")
   .argument("[job-id]", "Optional Job ID to see details")
   .option("--json", "Output raw JSON")
-  .action(async (company, jobId, options) => {
+  .action(async (companyOrUrl, jobId, options) => {
     try {
-      if (jobId) {
-        const job = await fetchJobPosting(company, jobId);
+      let company = companyOrUrl;
+      let targetJobId = jobId;
+
+      const parsed = parseAshbyUrl(companyOrUrl);
+      if (parsed) {
+        company = parsed.company;
+        targetJobId = parsed.jobId || jobId;
+      }
+
+      if (targetJobId) {
+        const job = await fetchJobPosting(company, targetJobId);
         if (options.json) {
           console.log(JSON.stringify(formatJobDetailsJson(job), null, 2));
         } else {
