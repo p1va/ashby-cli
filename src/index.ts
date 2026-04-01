@@ -33,16 +33,21 @@ program
           console.log(formatJobBoard(org, board));
         }
       }
-    } catch (error: any) {
-      if (error?.response?.errors) {
+    } catch (error: unknown) {
+      const err = error as {
+        response?: { errors?: { message: string }[] };
+        message?: string;
+        cause?: Error;
+      };
+      if (err?.response?.errors) {
         // Handle GraphQL errors
-        const messages = error.response.errors.map((e: any) => e.message).join(", ");
+        const messages = err.response.errors.map((e) => e.message).join(", ");
         console.error(chalk.red(`\nError: ${messages}`));
       } else {
         // Handle other errors (network, not found, etc)
-        let message = error.message || String(error);
-        if (error.cause && error.cause.message) {
-          message += ` (${error.cause.message})`;
+        let message = err.message || String(error);
+        if (err.cause && err.cause.message) {
+          message += ` (${err.cause.message})`;
         }
         console.error(chalk.red(`\nError: ${message}`));
       }

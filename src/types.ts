@@ -37,7 +37,12 @@ export interface CompensationTier {
 
 export interface ApplicationFormField {
   id: string;
-  field: any;
+  field: {
+    title?: string;
+    path?: string;
+    type?: string;
+    [key: string]: unknown;
+  } | null;
   isRequired: boolean;
   descriptionHtml: string | null;
 }
