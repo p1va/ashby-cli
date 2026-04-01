@@ -2,7 +2,12 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import { fetchJobBoard, fetchJobPosting, fetchOrganization } from "./api.js";
-import { formatJobBoard, formatJobDetails, formatJobDetailsJson } from "./formatter.js";
+import {
+  formatJobBoard,
+  formatJobBoardJson,
+  formatJobDetails,
+  formatJobDetailsJson,
+} from "./formatter.js";
 
 const program = new Command();
 
@@ -28,7 +33,7 @@ program
           fetchJobBoard(company),
         ]);
         if (options.json) {
-          console.log(JSON.stringify({ organization: org, jobs: board.jobPostings }, null, 2));
+          console.log(JSON.stringify(formatJobBoardJson(org, board), null, 2));
         } else {
           console.log(formatJobBoard(org, board));
         }

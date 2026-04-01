@@ -42,6 +42,22 @@ export const formatJobBoard = (org: Organization, board: JobBoard): string => {
   return `${header}\n${teamsOutput}`;
 };
 
+export const formatJobBoardJson = (org: Organization, board: JobBoard): object => {
+  return {
+    organization: org,
+    jobs: board.jobPostings.map((job) => ({
+      id: job.id,
+      title: job.title,
+      team: job.team,
+      location: job.locationName,
+      workplaceType: job.workplaceType,
+      employmentType: job.employmentType,
+      compensation: job.compensationTierSummary,
+      url: job.url,
+    })),
+  };
+};
+
 const stripHtml = (html: string): string => html.replace(/<[^>]*>?/gm, "").trim();
 
 const formatFormField = (entry: ApplicationFormField): string => {
