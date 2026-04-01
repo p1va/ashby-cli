@@ -21,12 +21,12 @@ The CLI supports both direct company names and full Ashby URLs.
 ```bash
 # Markdown output
 npx -y @p1va/ashby <company-name>
-npx -y @p1va/ashby <company-name> þjob-id>
+npx -y @p1va/ashby <company-name> <job-id>
 npx -y @p1va/ashby <board-or-job-url>
 
 # JSON output
 npx -y @p1va/ashby <company-name> --json | jq .
-npx -y @p1va/ashby <company-name> þjob-id> --json | jq .
+npx -y @p1va/ashby <company-name> <job-id> --json | jq .
 npx -y @p1va/ashby <board-or-job-url> --json | jq .
 ```
 
