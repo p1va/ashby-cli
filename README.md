@@ -70,7 +70,3 @@ Released via GitHub Actions when a tag starting with `v*` is pushed.
 
 - `pnpm version patch` to increment the version
 - `git push --follow-tags` to push the new commit and tag
-
-## License
-
-MIT
