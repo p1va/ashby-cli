@@ -12,7 +12,7 @@ A CLI for browsing job openings in Ashby-powered Job Boards.
 
 You can run the CLI immediately with `npx -y @p1va/ashby`
 
-or install it globally and invoke the `ashby` command with `npm install -g @p1va/ashby`.
+or install it globally with `npm install -g @p1va/ashby` and invoke the `ashby` command.
 
 ## Usage
 
