@@ -95,15 +95,16 @@ export const formatJobDetails = (job: JobPostingDetails): string => {
 };
 
 export const formatJobDetailsJson = (job: JobPostingDetails): object => {
-  const applicationForm = job.applicationForm?.sections.flatMap((section) =>
-    section.fieldEntries.map((entry) => ({
-      name: entry.field?.title || entry.field?.path || "Unknown Field",
-      type: entry.field?.type || "unknown",
-      required: entry.isRequired,
-      description: entry.descriptionHtml ? stripHtml(entry.descriptionHtml) : null,
-      section: section.title,
-    }))
-  ) || [];
+  const applicationForm =
+    job.applicationForm?.sections.flatMap((section) =>
+      section.fieldEntries.map((entry) => ({
+        name: entry.field?.title || entry.field?.path || "Unknown Field",
+        type: entry.field?.type || "unknown",
+        required: entry.isRequired,
+        description: entry.descriptionHtml ? stripHtml(entry.descriptionHtml) : null,
+        section: section.title,
+      }))
+    ) || [];
 
   return {
     id: job.id,
