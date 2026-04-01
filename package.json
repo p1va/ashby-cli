@@ -8,6 +8,7 @@
   "version": "0.0.1",
   "description": "CLI for browsing open positions hosted via Ashby",
   "license": "MIT",
+  "packageManager": "pnpm@10.16.1",
   "type": "module",
   "bin": {
     "ashby": "./dist/index.js"
@@ -51,4 +52,3 @@
     "vitest": "^3.2.4"
   }
 }
-
