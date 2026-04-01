@@ -93,3 +93,30 @@ export const formatJobDetails = (job: JobPostingDetails): string => {
 
   return [header, markdown, details, appForm].filter(Boolean).join("\n");
 };
+
+export const formatJobDetailsJson = (job: JobPostingDetails): object => {
+  const applicationForm = job.applicationForm?.sections.flatMap((section) =>
+    section.fieldEntries.map((entry) => ({
+      name: entry.field?.title || entry.field?.path || "Unknown Field",
+      type: entry.field?.type || "unknown",
+      required: entry.isRequired,
+      description: entry.descriptionHtml ? stripHtml(entry.descriptionHtml) : null,
+      section: section.title,
+    }))
+  ) || [];
+
+  return {
+    id: job.id,
+    title: job.title,
+    department: job.departmentName,
+    location: job.locationName,
+    workplaceType: job.workplaceType,
+    employmentType: job.employmentType,
+    publishedDate: job.publishedDate,
+    compensation: job.compensationTierSummary,
+    teamNames: job.teamNames,
+    url: job.url,
+    descriptionMarkdown: turndownService.turndown(job.descriptionHtml),
+    applicationForm,
+  };
+};
