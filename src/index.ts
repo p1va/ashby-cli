@@ -8,39 +8,34 @@ import {
   formatJobDetails,
   formatJobDetailsJson,
 } from "./formatter.js";
+import { parseAshbyUrl } from "./utils.js";
 
 const program = new Command();
-
-function parseAshbyUrl(input: string): { company: string; jobId?: string } | null {
-  try {
-    const url = new URL(input);
-    if (url.hostname !== "jobs.ashbyhq.com") return null;
-
-    const segments = url.pathname.split("/").filter(Boolean);
-    if (segments.length === 0) return null;
-
-    return {
-      company: segments[0],
-      jobId: segments[1],
-    };
-  } catch {
-    return null;
-  }
-}
 
 program
   .name("ashby")
   .description("CLI for browsing open positions hosted via Ashby")
   .version("0.0.1")
-  .argument("<company-or-url>", "Company name or Ashby job board URL")
-  .argument("[job-id]", "Optional Job ID to see details")
+  .argument("<input>", "Company name or Ashby job board/posting URL")
+  .argument("[job-id]", "Job ID (if not provided in the URL)")
   .option("--json", "Output raw JSON")
-  .action(async (companyOrUrl, jobId, options) => {
+  .addHelpText(
+    "after",
+    `
+Examples:
+  $ ashby lovable                                      # List jobs for a company
+  $ ashby https://jobs.ashbyhq.com/lovable             # List jobs from board URL
+  $ ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d # View specific job
+  $ ashby https://jobs.ashbyhq.com/lovable/9f4963e7    # View job from posting URL
+  $ ashby lovable --json                               # Export board as JSON
+`
+  )
+  .action(async (input, jobId, options) => {
     try {
-      let company = companyOrUrl;
+      let company = input;
       let targetJobId = jobId;
 
-      const parsed = parseAshbyUrl(companyOrUrl);
+      const parsed = parseAshbyUrl(input);
       if (parsed) {
         company = parsed.company;
         targetJobId = parsed.jobId || jobId;
