@@ -1,80 +1,72 @@
+<div align="center">
+
 # Ashby CLI
 
-A command-line interface for browsing open positions hosted via [Ashby](https://www.ashbyhq.com/) directly from your terminal.
+A CLI for browsing job openings in [Ashby](https://www.ashbyhq.com/) powered Job Boards.
 
-## Features
+![NPM Version](https://img.shields.io/npm/v/%40p1va%2Fashby-cli?style=flat)
 
-- **Job Board:** List all open positions for a company, beautifully formatted and grouped by team.
-- **Job Details:** View the full job description (rendered as Markdown) and the application form requirements right in your terminal.
-- **JSON Output:** Export data as JSON for easy integration with other tools or scripts.
-- **One-liner format:** Job boards are printed in a greppable one-line format, including the standalone Job ID for easy copy-pasting.
+</div>
 
 ## Installation
 
-You can run the CLI immediately using `npx` (or `pnpx`):
+You can run the CLI immediately with `npx @p1va/ashby`
 
-```bash
-npx @p1va/ashby <company>
-```
-
-To install it globally:
-
-```bash
-npm install -g @p1va/ashby
-# or
-pnpm install -g @p1va/ashby
-```
+or install it globally and invoke the `ashby` command with `npm install -g @p1va/ashby`.
 
 ## Usage
 
-The primary commands revolve around specifying the company name as it appears in their Ashby URL (e.g., for `https://jobs.ashbyhq.com/Peec`, the company name is `Peec`).
-
-### View a Company's Job Board
-
 ```bash
-ashby Peec
+# Markdown Output
+npx @p1va/ashby <company-name>
+npx @p1va/ashby <company-name> <job-id>
+
+# Json Output
+npx @p1va/ashby <company-name> --json
+npx @p1va/ashby <company-name> <job-id> --json
 ```
 
-### View a Specific Job's Details
+To use the CLI first we need to know thecompany name as it appears in their hosted Ashby URL.
 
-Pass the job ID after the company name. You can copy the ID directly from the Job Board list.
+For example Lovable's career page is hosted at `https://jobs.ashbyhq.com/lovable` and their Ashby company name is `lovable`.
+
+#### List Jobs
 
 ```bash
-ashby Peec 5e285378-4223-4c19-8d7b-7c212bc9c827
+# Npx
+npx @p1va/ashby lovable
+npx @p1va/ashby lovable --json
+
+# Global installation
+ashby lovable
+ashby lovable --json
 ```
 
-### Export as JSON
+#### Job Details
 
-Add the `--json` flag to either command to receive structured JSON output.
+Pass the job ID after the company name. You can either take the ID from the Job Board list or from the URL `https://jobs.ashbyhq.com/lovable/9f4...22d`.
 
 ```bash
-ashby Peec --json
-ashby Peec 5e285378-4223-4c19-8d7b-7c212bc9c827 --json
+# Npx
+npx @p1va/ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d
+npx @p1va/ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d --json
+
+# Global installation
+ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d
+ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d --json
 ```
 
 ## Development
 
-This project uses `pnpm` and is built with functional TypeScript. We use `just` as a command runner for development workflows.
-
-### Setup
-
-```bash
-git clone https://github.com/p1va/ashby-cli.git
-cd ashby-cli
-pnpm install
-```
-
-### Available Commands
-
-- `just dev <company> [job-id]`: Run the CLI from source via `tsx`.
-- `just build`: Compile the TypeScript code to `./dist`.
-- `just test`: Run the Vitest test suite.
-- `just lint`: Run ESLint.
-- `just format`: Format the codebase using Prettier.
+- `pnpm install` to install dependencies
+- `pnpm dev <company> [job-id]` to run the CLI from source via `tsx`
+- To explore Ashby GraphQL API responses
+  - `just explore-board "lovable"`
+  - `just explore-job "lovable" "264297a0-251c-4d0b-83c1-dc64e1b5d2f3"`
 
 ### Publishing
 
-Releases are fully automated via GitHub Actions. Pushing a tag starting with `v*` (e.g., `v1.0.0`) will automatically publish the package to NPM.
+Released via GitHub Actions when a tag starting with `v*` is pushed.
 
 ## License
 
