@@ -8,6 +8,8 @@ on:
 jobs:
   release-and-publish:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     # These permissions are essential for the workflow to function correctly.
     # 'contents: write' is now needed for the GitHub CLI to create the release.
