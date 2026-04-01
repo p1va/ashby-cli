@@ -4,7 +4,7 @@
 
 A CLI for browsing job openings in Ashby-powered Job Boards.
 
-![NPM Version](https://img.shields.io/npm/v/%40p1va%2Fashby-cli?style=flat)
+![NPM Version](https://img.shields.io/npm/v/%40p1va%2Fashby?style=flat)
 
 </div>
 
@@ -22,8 +22,8 @@ npx @p1va/ashby <company-name>
 npx @p1va/ashby <company-name> <job-id>
 
 # Json Output
-npx @p1va/ashby <company-name> --json
-npx @p1va/ashby <company-name> <job-id> --json
+npx @p1va/ashby <company-name> --json | jq .
+npx @p1va/ashby <company-name> <job-id> --json | jq .
 ```
 
 To use the CLI first we need to know thecompany name as it appears in their hosted Ashby URL.
@@ -49,11 +49,11 @@ Pass the job ID after the company name. You can either take the ID from the Job 
 ```bash
 # Npx
 npx @p1va/ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d
-npx @p1va/ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d --json
+npx @p1va/ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d --json | jq .
 
 # Global installation
 ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d
-ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d --json
+ashby lovable 9f4963e7-be14-4dd9-99ce-05df2f06e22d --json | jq .
 ```
 
 ## Development
